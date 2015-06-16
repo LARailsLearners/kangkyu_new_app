@@ -6,8 +6,6 @@ class ProductsController < ApplicationController
   # GET /products.json
   def index
     @products = Product.all
-    user_session[:sean] = "awesome"
-    puts user_session.inspect
   end
 
   # GET /products/1
@@ -22,12 +20,17 @@ class ProductsController < ApplicationController
 
   # GET /products/1/edit
   def edit
+    if @product.user_id == current_user.id
+    else
+      redirect_to root_url
+    end
   end
 
   # POST /products
   # POST /products.json
   def create
     @product = Product.new(product_params)
+    @product.user_id = current_user.id
 
     respond_to do |format|
       if @product.save
@@ -57,10 +60,14 @@ class ProductsController < ApplicationController
   # DELETE /products/1
   # DELETE /products/1.json
   def destroy
-    @product.destroy
-    respond_to do |format|
-      format.html { redirect_to products_url, notice: 'Product was successfully destroyed.' }
-      format.json { head :no_content }
+    if @product.user_id == current_user.id
+      @product.destroy
+      respond_to do |format|
+        format.html { redirect_to products_url, notice: 'Product was successfully destroyed.' }
+        format.json { head :no_content }
+      end
+    else
+      redirect_to root_url
     end
   end
 
