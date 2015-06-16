@@ -1,7 +1,5 @@
 <p id="notice"><%= notice %></p>
 
-
-
 <p>
   <strong>Name:</strong>
   <%= @product.name %>
@@ -9,7 +7,7 @@
 
 <p>
   <strong>User this product belongs to:</strong>
-  <%= @product.user.email %>
+  <%= (@product.user.email if @product.user) || "no user assigned" %>
 </p>
 
 <p>
