@@ -22,8 +22,8 @@ application up and running.
 
 * I want to make tab buttons for
 
-1. all products
-2. my products
+  1. all products
+  2. my products
 
 * I want to use pundit
 
