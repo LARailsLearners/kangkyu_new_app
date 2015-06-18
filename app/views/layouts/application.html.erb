@@ -25,13 +25,17 @@
   <body>
     <%= render 'layouts/nav_bar' %>
 
-    <% flash.each do |key, value| %>
-      <div class="<%= flash_class(key) %>">
-        <%= value %>
-      </div>
-    <% end %>
-
     <div class="container">
+
+      <% flash.each do |key, value| %>
+        <div class="<%= flash_class(key) %> alert-dismissable", role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+            &times;
+          </button>
+          <%= content_tag :div, value, :id => "flash_#{key}" %>
+        </div>
+      <% end %>
+
       <%= yield %>
       <hr>
 

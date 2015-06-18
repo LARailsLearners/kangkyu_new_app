@@ -29,7 +29,7 @@ class ProductsController < ApplicationController
   # POST /products.json
   def create
     @product = Product.new(product_params)
-    @product.user_id = current_user.id
+    @product.user = current_user
 
     respond_to do |format|
       if @product.save
@@ -78,6 +78,6 @@ class ProductsController < ApplicationController
     end
 
     def authorize_user
-      redirect_to root_url, error: "not your product!" unless @product.user_can_change?(current_user)
+      redirect_to root_url, alert: "not your product!" unless @product.user_can_change?(current_user)
     end
 end

@@ -27,4 +27,6 @@ application up and running.
 
 * I want to use pundit
 
-* <del>add a bar for flash messages (error, notice)</del>
+* <del>add a bar for flash messages (alert, notice)</del>
+
+* I want to style @product.errors
