@@ -78,6 +78,6 @@ class ProductsController < ApplicationController
     end
 
     def authorize_user
-      redirect_to root_url, alert: "not your product!" unless @product.user_can_change?(current_user)
+      redirect_to products_url, alert: "not your product!" unless @product.user_can_change?(current_user)
     end
 end
