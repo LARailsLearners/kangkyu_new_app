@@ -1,6 +1,8 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!, only: :new
+  before_action :authenticate_user!, except: [:index, :show]
+
+  include ControllerConcerns
 
   # GET /products
   # GET /products.json
@@ -20,9 +22,9 @@ class ProductsController < ApplicationController
 
   # GET /products/1/edit
   def edit
-    if @product.user_id == current_user.id
+    if @product.user_can_change?(current_user)
     else
-      redirect_to root_url
+      redirect_to root_url, error: "not your product!"
     end
   end
 
@@ -60,14 +62,14 @@ class ProductsController < ApplicationController
   # DELETE /products/1
   # DELETE /products/1.json
   def destroy
-    if @product.user_id == current_user.id
+    if @product.user_can_change?(current_user)
       @product.destroy
       respond_to do |format|
         format.html { redirect_to products_url, notice: 'Product was successfully destroyed.' }
         format.json { head :no_content }
       end
     else
-      redirect_to root_url
+      redirect_to root_url, error: "permission denied"
     end
   end
 

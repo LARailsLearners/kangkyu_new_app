@@ -4,9 +4,16 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
 
+  # # authorization
+  # def created_by_current_user?(product)
+  #   product.user && current_user == product.user
+  # end
+  # helper_method :created_by_current_user?
+
   protected
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:firstname, :lastname, :email, :password, :password_confirmation) }
   end
+
 end
