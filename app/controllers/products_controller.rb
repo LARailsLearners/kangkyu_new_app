@@ -1,6 +1,7 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, except: [:index, :show]
+  before_action :authorize_user, only: [:edit, :update, :destroy]
 
   include ControllerConcerns
 
@@ -22,10 +23,6 @@ class ProductsController < ApplicationController
 
   # GET /products/1/edit
   def edit
-    if @product.user_can_change?(current_user)
-    else
-      redirect_to root_url, error: "not your product!"
-    end
   end
 
   # POST /products
@@ -62,14 +59,10 @@ class ProductsController < ApplicationController
   # DELETE /products/1
   # DELETE /products/1.json
   def destroy
-    if @product.user_can_change?(current_user)
-      @product.destroy
-      respond_to do |format|
-        format.html { redirect_to products_url, notice: 'Product was successfully destroyed.' }
-        format.json { head :no_content }
-      end
-    else
-      redirect_to root_url, error: "permission denied"
+    @product.destroy
+    respond_to do |format|
+      format.html { redirect_to products_url, notice: 'Product was successfully destroyed.' }
+      format.json { head :no_content }
     end
   end
 
@@ -82,5 +75,9 @@ class ProductsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def product_params
       params.require(:product).permit(:name, :description, :price)
+    end
+
+    def authorize_user
+      redirect_to root_url, error: "not your product!" unless @product.user_can_change?(current_user)
     end
 end
