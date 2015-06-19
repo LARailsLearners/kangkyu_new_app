@@ -1,16 +1,12 @@
 require 'test_helper'
 
 class ProductsControllerTest < ActionController::TestCase
-  include Devise::TestHelpers
 
-  setup do
-    @product = products(:one)
-  end
-
-  class WhenSignedOut < ProductsControllerTest
-    # setup do
-    #   sign_out users(:one)
-    # end
+  class UserNotAuthenticated < ProductsControllerTest
+    setup do
+      @product = products(:one)
+      # sign_out users(:one)
+    end
 
     test "should get index" do
       get :index
@@ -32,7 +28,7 @@ class ProductsControllerTest < ActionController::TestCase
     end
   end
 
-  class WhenUserSignedIn < ProductsControllerTest
+  class UserAuthenticated < ProductsControllerTest
     setup do
       sign_in users(:one)
     end
@@ -50,22 +46,54 @@ class ProductsControllerTest < ActionController::TestCase
       assert_redirected_to product_path(assigns(:product))
     end
 
-    test "should get edit" do
-      get :edit, id: @product
-      assert_response :success
-    end
-
-    test "should update product" do
-      patch :update, id: @product, product: { description: @product.description, name: @product.name, price: @product.price }
-      assert_redirected_to product_path(assigns(:product))
-    end
-
-    test "should destroy product" do
-      assert_difference('Product.count', -1) do
-        delete :destroy, id: @product
+    class UserAuthorized < UserAuthenticated
+      setup do
+        sign_in (user = users(:one))
+        @product = user.products.first
       end
 
-      assert_redirected_to products_path
+      test "should get edit" do
+        get :edit, id: @product
+        assert_response :success
+      end
+
+      test "should update product" do
+        patch :update, id: @product, product: { description: @product.description, name: @product.name, price: @product.price }
+        assert_redirected_to product_path(assigns(:product))
+      end
+
+      test "should destroy product" do
+        assert_difference('Product.count', -1) do
+          delete :destroy, id: @product
+        end
+
+        assert_redirected_to products_path
+      end
+    end
+
+    class NotAuthorized < UserAuthenticated
+      setup do
+        sign_in users(:two)
+      end
+
+      test "not authorized should get redirect" do
+        get :edit, id: @product
+        assert_response :redirect
+      end
+
+      test "should not be able to update product" do
+        patch :update, id: @product, product: { description: @product.description, name: @product.name, price: @product.price }
+        assert_response :redirect
+        assert_redirected_to products_path
+      end
+
+      test "should not be able to destroy product" do
+        assert_no_difference 'Product.count' do
+          delete :destroy, id: @product
+        end
+        assert_response :redirect
+        assert_redirected_to products_path
+      end
     end
   end
 
