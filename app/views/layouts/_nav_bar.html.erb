@@ -14,7 +14,20 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+        <li class="<%= "active" if current_page?(products_path) %>">
+          <%= link_to products_path do %>
+            Products
+            <%= content_tag(:span, "(current)", class: "sr-only") if current_page?(products_path) %>
+          <% end %>
+        </li>
+        <% if user_signed_in? %>
+        <li class="<%= "active" if current_page?(edit_user_registration_path(current_user)) %>">
+          <%= link_to edit_user_registration_path(current_user) do %>
+            Edit Profile
+            <%= content_tag(:span, "(current)", class: "sr-only") if current_page?(edit_user_registration_path(current_user)) %>
+          <% end %>
+        </li>
+        <% end %>
         <li><a href="#">Link</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
