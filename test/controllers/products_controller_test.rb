@@ -26,11 +26,42 @@ class ProductsControllerTest < ActionController::TestCase
       get :new
       assert_response :redirect
     end
+
+    test "should not get new" do
+      get :new
+      assert_response :redirect
+    end
+
+    test "should create product" do
+      assert_no_difference('Product.count') do
+        post :create, product: { description: @product.description, name: @product.name, price: @product.price }
+      end
+    end
+
+    test "should not get edit" do
+      get :edit, id: @product
+      assert_response :redirect
+    end
+
+    test "should not be able to update product" do
+      patch :update, id: @product, product: { description: @product.description, name: @product.name, price: @product.price }
+      assert_response :redirect
+      assert_redirected_to new_user_session_path
+    end
+
+    test "should not be able to destroy product" do
+      assert_no_difference 'Product.count' do
+        delete :destroy, id: @product
+      end
+      assert_response :redirect
+      assert_redirected_to new_user_session_path
+    end
   end
 
   class UserAuthenticated < ProductsControllerTest
     setup do
       sign_in users(:one)
+      @product = products(:one)
     end
 
     test "should get new" do
@@ -48,8 +79,8 @@ class ProductsControllerTest < ActionController::TestCase
 
     class UserAuthorized < UserAuthenticated
       setup do
-        sign_in (user = users(:one))
-        @product = user.products.first
+        @product = products(:one)
+        sign_in @product.user
       end
 
       test "should get edit" do
@@ -73,7 +104,9 @@ class ProductsControllerTest < ActionController::TestCase
 
     class NotAuthorized < UserAuthenticated
       setup do
-        sign_in users(:two)
+        @product = products(:one)
+        assert_not_equal @product.user, products(:two).user
+        sign_in products(:two).user
       end
 
       test "not authorized should get redirect" do
