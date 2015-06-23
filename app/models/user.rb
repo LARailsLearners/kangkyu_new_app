@@ -5,17 +5,17 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
   has_many :products
 
-  def is_super?
-    false #TODO
-  end
-
-  # def can_change?(obj)
-  #   owns?(obj)
+  # def is_super?
+  #   false #TODO
   # end
 
-  # def owns?(obj)
-  #   obj.user == self
-  # end
+  # # def can_change?(obj)
+  # #   owns?(obj)
+  # # end
+
+  # # def owns?(obj)
+  # #   obj.user == self
+  # # end
 
   # auth - who are you?
   # authz - what can you do?
