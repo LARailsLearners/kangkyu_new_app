@@ -23,6 +23,7 @@ class ProductsController < ApplicationController
 
   # GET /products/1/edit
   def edit
+    # authorize @product
   end
 
   # POST /products
@@ -45,6 +46,9 @@ class ProductsController < ApplicationController
   # PATCH/PUT /products/1
   # PATCH/PUT /products/1.json
   def update
+
+    # authorize @product
+
     respond_to do |format|
       if @product.update(product_params)
         format.html { redirect_to @product, notice: 'Product was successfully updated.' }
@@ -78,6 +82,8 @@ class ProductsController < ApplicationController
     end
 
     def authorize_user
-      redirect_to products_url, alert: "not your product!" unless @product.user_can_change?(current_user)
+      # authorize @product
+      # @policy = ProductPolicy.new(current_user, @product)
+      redirect_to products_url, alert: "not your product!" unless policy(@product).update?
     end
 end

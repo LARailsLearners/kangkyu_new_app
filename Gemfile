@@ -28,6 +28,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 
 gem 'devise'
+gem 'pundit', '~> 1.0.1'
 
 # use bootstrap
 gem 'bootstrap-sass', '~> 3.3.4'
