@@ -7,6 +7,6 @@ class ProductPolicy < ApplicationPolicy
   # end
 
   def update?
-    user.admin? || user == record.user
+    user.try(:admin?) or user == record.user
   end
 end
