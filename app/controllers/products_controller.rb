@@ -82,8 +82,8 @@ class ProductsController < ApplicationController
     end
 
     def authorize_user
-      # authorize @product
+      authorize @product
       # @policy = ProductPolicy.new(current_user, @product)
-      redirect_to products_url, alert: "not your product!" unless policy(@product).update?
+      # redirect_to products_url, alert: "not your product!" unless policy(@product).update?
     end
 end

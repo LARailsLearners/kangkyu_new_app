@@ -9,4 +9,12 @@ class ProductPolicy < ApplicationPolicy
   def update?
     user.try(:admin?) or user == record.user
   end
+
+  def edit?
+    update?
+  end
+
+  def destroy?
+    update?
+  end
 end

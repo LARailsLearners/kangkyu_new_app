@@ -117,7 +117,7 @@ class ProductsControllerTest < ActionController::TestCase
       test "should not be able to update product" do
         patch :update, id: @product, product: { description: @product.description, name: @product.name, price: @product.price }
         assert_response :redirect
-        assert_redirected_to products_path
+        assert_redirected_to root_path
       end
 
       test "should not be able to destroy product" do
@@ -125,7 +125,7 @@ class ProductsControllerTest < ActionController::TestCase
           delete :destroy, id: @product
         end
         assert_response :redirect
-        assert_redirected_to products_path
+        assert_redirected_to root_path
       end
     end
   end
