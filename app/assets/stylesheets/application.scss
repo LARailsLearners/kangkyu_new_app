@@ -10,5 +10,11 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  */
-@import "custom"
+@import "custom";
  
+body {
+  padding-top: 70px;
+  h1 {
+    padding-top: 70px;
+  }
+}
