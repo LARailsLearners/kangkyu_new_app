@@ -52,7 +52,7 @@ GEM
     ansi (1.5.0)
     arbre (1.0.3)
       activesupport (>= 3.0.0)
-    arel (6.0.0)
+    arel (6.0.2)
     autoprefixer-rails (5.2.1)
       execjs
       json
@@ -97,7 +97,7 @@ GEM
       has_scope (~> 0.6.0.rc)
       railties (>= 3.2, < 5)
       responders
-    jbuilder (2.3.0)
+    jbuilder (2.3.1)
       activesupport (>= 3.0.0, < 5)
       multi_json (~> 1.2)
     jquery-rails (4.0.4)
@@ -123,12 +123,12 @@ GEM
     minitest-rails (2.2.0)
       minitest (~> 5.7)
       railties (~> 4.1)
-    minitest-reporters (1.0.17)
+    minitest-reporters (1.0.19)
       ansi
       builder
       minitest (>= 5.0)
       ruby-progressbar
-    multi_json (1.11.1)
+    multi_json (1.11.2)
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
     orm_adapter (0.5.0)
@@ -175,7 +175,7 @@ GEM
     responders (2.1.0)
       railties (>= 4.2.0, < 5)
     ruby-progressbar (1.7.5)
-    sass (3.4.15)
+    sass (3.4.16)
     sass-rails (5.0.3)
       railties (>= 4.0.0, < 5.0)
       sass (~> 3.1)
