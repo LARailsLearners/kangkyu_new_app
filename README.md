@@ -25,7 +25,9 @@ application up and running.
   1. all products
   2. my products
 
-* I want to use pundit
+* <del>I want to use pundit</del>
+
+* I want to use active admin gem
 
 * <del>add a bar for flash messages (alert, notice)</del>
 
