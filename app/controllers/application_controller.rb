@@ -9,6 +9,13 @@ class ApplicationController < ActionController::Base
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
+  def authenticate_admin_user!
+    authenticate_user!
+    unless current_user.admin?
+      redirect_to root_url, alert: "not authorized as admin user!"
+    end
+  end
+
   private
 
   def user_not_authorized

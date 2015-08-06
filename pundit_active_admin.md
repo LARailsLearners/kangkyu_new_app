@@ -52,3 +52,5 @@ User.create!({:email => "admin@example.com", :role => "admin", :password => "pas
       create  app/assets/stylesheets/active_admin.css.scss
       create  db/migrate/20150727230646_create_active_admin_comments.rb
 ```
+
+http://activeadmin.info/docs/1-general-configuration.html#comments
